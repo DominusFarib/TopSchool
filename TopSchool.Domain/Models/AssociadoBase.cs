@@ -1,4 +1,4 @@
-﻿namespace TopSchool.API.Models;
+﻿namespace TopSchool.Domain.Models;
 
 public abstract class AssociadoBase : ModelBase
 {

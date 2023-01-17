@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TopSchool.Domain.Models;
+using TopSchool.Domain.Interfaces.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,18 +10,25 @@ namespace TopSchool.API.Controllers
     [Route("topschool/[controller]")]
     public class ProfessorController : ControllerBase
     {
+        private readonly IProfessorService _Service;
+
+        public ProfessorController(IProfessorService service)
+        {
+            _Service = service;
+        }
         // GET: api/<ProfessorController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(await _Service.GetAllAsync());
+            //return new string[] { "value1", "value2" };
         }
 
         // GET api/<ProfessorController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return (IActionResult)_Service.Get(id);
         }
 
         // POST api/<ProfessorController>

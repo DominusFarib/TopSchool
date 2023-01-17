@@ -16,7 +16,10 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5070",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CONNECTION": "Data Source=DbTopSchool.db",
+        "DATABASE": "SQLITE",
+        "MIGRATION": "false"
       }
     },
     "IIS Express": {
