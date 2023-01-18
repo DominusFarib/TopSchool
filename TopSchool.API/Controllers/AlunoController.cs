@@ -4,7 +4,8 @@ using TopSchool.Domain.Interfaces.Services;
 
 namespace TopSchool.API.Controllers;
 [ApiController]
-[Route("topschool/[controller]")]
+[ApiVersion("6.0")]
+[Route("topschool/v{version:apiVersion}/[controller]")]
 public class AlunoController : ControllerBase
 {
     private readonly IAlunoService _Service;
@@ -13,6 +14,11 @@ public class AlunoController : ControllerBase
     {
         _Service = service;
     }
+    /// <summary>
+    /// Obtem todos os alunos ativos
+    /// URL: topschool/aluno/getall
+    /// </summary>
+    /// <returns></returns>
     // GET: api/<AlunoController>
     [HttpGet]
     public async Task<ActionResult> GetAll()
@@ -38,6 +44,11 @@ public class AlunoController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] AlunoModel oModel)
     {
+        if (_Service.Get(id) == null)
+        {
+            return BadRequest("Aluno não encontrado");
+        }
+
         return Ok(_Service.Put(oModel));
     }
 

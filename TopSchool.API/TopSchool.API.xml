@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TopSchool.API</name>
+    </assembly>
+    <members>
+        <member name="M:TopSchool.API.Controllers.AlunoController.GetAll">
+            <summary>
+            Obtem todos os alunos ativos
+            URL: topschool/aluno/getall
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -7,7 +7,8 @@ using TopSchool.Domain.Interfaces.Services;
 namespace TopSchool.API.Controllers
 {
     [ApiController]
-    [Route("topschool/[controller]")]
+    [ApiVersion("6.0")]
+    [Route("topschool/v{version:apiVersion}/[controller]")]
     public class ProfessorController : ControllerBase
     {
         private readonly IProfessorService _Service;
