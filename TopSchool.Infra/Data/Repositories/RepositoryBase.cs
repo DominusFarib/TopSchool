@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TopSchool.Domain.Entities;
+using TopSchool.Domain.Helpers;
 using TopSchool.Domain.Interfaces.Repositories;
 
 namespace TopSchool.Infra.Data.Repositories;
@@ -88,11 +89,29 @@ public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : 
         }
     }
 
-    public async Task<IEnumerable<TEntity>> SelectAllAsync()
+    public async Task<PaginationList<TEntity>> SelectAllAsync(PaginationConfig pageParams)
     {
         try
         {
-            return await _dbSet.ToListAsync();
+            /*
+            IQueryable<Aluno> query = _dbContext.DbSetAluno;
+
+            query.Include(a => a.AlunoDisciplinas)
+                .ThenInclude(ad => ad.ProfessorDaDisciplina)
+                .ThenInclude(pd => pd.Disciplina)
+                .ThenInclude(d=>d.ProfessoresDaDisciplinas)
+                .ThenInclude(d=>d.Professor);
+
+            query= query.AsNoTracking().OrderBy(a => a.Nome);
+
+            return await query.ToListAsync();
+           */
+
+            /// return await _dbSet.ToListAsync();
+            /// 
+            var items = await _dbSet.ToListAsync();
+
+            return await PaginationList<TEntity>.GetNextPageAsync(items, pageParams.CurrentPage, pageParams.ItemsPerPage);
         }
         catch (Exception ex)
         {

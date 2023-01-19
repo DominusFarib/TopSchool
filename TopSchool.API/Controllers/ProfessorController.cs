@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TopSchool.Domain.Models;
 using TopSchool.Domain.Interfaces.Services;
+using TopSchool.Domain.Helpers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,9 +20,9 @@ namespace TopSchool.API.Controllers
         }
         // GET: api/<ProfessorController>
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromQuery] PaginationConfig pageParams)
         {
-            return Ok(await _Service.GetAllAsync());
+            return Ok(await _Service.GetAllAsync(pageParams));
             //return new string[] { "value1", "value2" };
         }
 

@@ -1,4 +1,5 @@
-﻿using TopSchool.Domain.Models;
+﻿using TopSchool.Domain.Helpers;
+using TopSchool.Domain.Models;
 
 namespace TopSchool.Domain.Interfaces.Services
 {
@@ -6,7 +7,7 @@ namespace TopSchool.Domain.Interfaces.Services
     {
         Task<AlunoModel?> GetByNameAsync(string pName);
         Task<AlunoModel?> GetByEmailAsync(string pEmail);
-        Task<IEnumerable<AlunoModel>> GetAllAsync();
+        Task<PaginationList<AlunoModel>> GetAllAsync(PaginationConfig pageParams);
         Task<IEnumerable<AlunoModel>?> GetByLikeNameAsync(string pNamePart);
 
     }

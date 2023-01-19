@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TopSchool.Domain.Models;
 using TopSchool.Domain.Interfaces.Services;
+using TopSchool.Domain.Helpers;
 
 namespace TopSchool.API.Controllers;
 [ApiController]
@@ -21,9 +22,13 @@ public class AlunoController : ControllerBase
     /// <returns></returns>
     // GET: api/<AlunoController>
     [HttpGet]
-    public async Task<ActionResult> GetAll()
+    public async Task<ActionResult> GetAll([FromQuery] PaginationConfig pageParams)
     {
-        return Ok(await _Service.GetAllAsync());
+        var result = await _Service.GetAllAsync(pageParams);
+
+        Response.AddPagination(result.CurPage, result.TotalPages, result.ItemsPerPage, result.TotalItems);
+
+        return Ok(result);
     }
 
     // GET api/<AlunoController>/5
@@ -38,6 +43,13 @@ public class AlunoController : ControllerBase
     public IActionResult Post([FromBody] AlunoModel oModel)
     {
         return Ok(_Service.Post(oModel));
+    }
+
+    [HttpPost("addRange/")]
+    public IActionResult Post([FromBody] List<AlunoModel> oModel)
+    {
+        var ret = _Service.Post(oModel);
+        return Ok(ret);
     }
 
     // PUT api/<AlunoController>/5

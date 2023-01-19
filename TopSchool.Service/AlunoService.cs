@@ -3,6 +3,7 @@ using TopSchool.Domain.Entities;
 using TopSchool.Domain.Interfaces.Services;
 using TopSchool.Domain.Interfaces.Repositories;
 using AutoMapper;
+using TopSchool.Domain.Helpers;
 
 namespace TopSchool.Service;
 
@@ -16,10 +17,38 @@ public class AlunoService : ServiceBase<AlunoModel, AlunoModel, Aluno>, IAlunoSe
         _autoMapper = mapper;
     }
 
-    public async Task<IEnumerable<AlunoModel>> GetAllAsync()
+    public async Task<PaginationList<AlunoModel>> GetAllAsync(PaginationConfig pageParams)
     {
-        var ret = await _usuarioRepository.SelectAllAsync();
-        return _autoMapper.Map<IEnumerable<AlunoModel>>(ret);
+        var ret = await _usuarioRepository.SelectAllAsync(pageParams);
+
+        //PaginationList<AlunoModel> lista = new PaginationList<AlunoModel>
+        //{
+        //    CurPage = ret.CurPage,
+        //    ItemsPerPage = ret.ItemsPerPage,
+        //    TotalItems = ret.TotalItems,
+        //    TotalPages = ret.TotalPages
+        //};
+
+        //foreach (var item in ret)
+        //{
+        //    lista.Add(_autoMapper.Map<AlunoModel>(item));
+        //}
+
+        try
+        {
+            var retModel = _autoMapper.Map<PaginationList<AlunoModel>>(ret);
+
+            retModel.CurPage = ret.CurPage;
+            retModel.ItemsPerPage = ret.ItemsPerPage;
+            retModel.TotalItems = ret.TotalItems;
+            retModel.TotalPages = ret.TotalPages;
+
+            return retModel;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     public Task<AlunoModel?> GetByEmailAsync(string pEmail)

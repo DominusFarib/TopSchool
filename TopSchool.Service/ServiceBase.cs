@@ -58,6 +58,25 @@ public class ServiceBase<ModelTarget, ModelResult, TEntity> :
         }
     }
 
+    public async Task<bool> Post(List<ModelTarget> pItems)
+    {
+        try
+        {
+            foreach (var item in pItems)
+            {
+                var newItem = _autoMapper.Map<TEntity>(item);
+                var ret = await _RepositoryBase.InsertAsync(newItem);
+            }
+
+            return await Task.FromResult(true);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Que droga de SQLite:" + ex.Message, ex.InnerException);
+        }
+    }
+
+
     /// <summary>
     /// Update Register on Database
     /// </summary>

@@ -14,6 +14,10 @@ public class MapperProfiles : Profile
 
         CreateMap<AlunoModel, Aluno>();
 
+        // CreateMap<PaginationList<Aluno>, PaginationList<AlunoModel>>();
+
+        //CreateMap<PaginationList<AlunoModel>, PaginationList<Aluno>>().;
+
         CreateMap<ProfessorModel, Professor>().ReverseMap();
         CreateMap<DisciplinaModel, Disciplina>().ReverseMap();
 

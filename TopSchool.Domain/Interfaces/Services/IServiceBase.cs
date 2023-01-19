@@ -9,5 +9,6 @@ public interface IServiceBase<ModelParam, ModelResult>
     Task<ModelResult> Get(int pId);
     Task<ModelResult> Post(ModelParam pItem);
     Task<ModelResult> Put(ModelResult pItem);
+    Task<bool> Post(List<ModelParam> pItems);
     Task<bool> Delete(int pId);
 }

@@ -1,4 +1,5 @@
 ﻿using TopSchool.Domain.Entities;
+using TopSchool.Domain.Helpers;
 
 namespace TopSchool.Domain.Interfaces.Repositories;
 
@@ -9,5 +10,5 @@ public interface IRepositoryBase<TEntity> where TEntity : EntityBase
     Task<bool> DeleteAsync(int pId);
 
     Task<TEntity> SelectAsync(int pId);
-    Task<IEnumerable<TEntity>> SelectAllAsync();
+    Task<PaginationList<TEntity>> SelectAllAsync(PaginationConfig pageParams);
 }

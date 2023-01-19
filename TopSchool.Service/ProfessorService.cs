@@ -3,6 +3,7 @@ using TopSchool.Domain.Entities;
 using TopSchool.Domain.Interfaces.Services;
 using TopSchool.Domain.Interfaces.Repositories;
 using AutoMapper;
+using TopSchool.Domain.Helpers;
 
 namespace TopSchool.Service;
 
@@ -16,9 +17,9 @@ public class ProfessorService : ServiceBase<ProfessorModel, ProfessorModel, Prof
         _autoMapper = mapper;
     }
 
-    public async Task<IEnumerable<ProfessorModel>> GetAllAsync()
+    public async Task<IEnumerable<ProfessorModel>> GetAllAsync(PaginationConfig pageParams)
     {
-        var ret = await _usuarioRepository.SelectAllAsync();
+        var ret = await _usuarioRepository.SelectAllAsync(pageParams);
         return _autoMapper.Map<IEnumerable<ProfessorModel>>(ret);
     }
 

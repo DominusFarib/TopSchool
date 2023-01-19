@@ -4,7 +4,7 @@
         <name>TopSchool.API</name>
     </assembly>
     <members>
-        <member name="M:TopSchool.API.Controllers.AlunoController.GetAll">
+        <member name="M:TopSchool.API.Controllers.AlunoController.GetAll(TopSchool.Domain.Helpers.PaginationConfig)">
             <summary>
             Obtem todos os alunos ativos
             URL: topschool/aluno/getall
