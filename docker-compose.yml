@@ -1,12 +1,39 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
 
 version: '3.4'
-
+volumes:
+  VolTopSchoolDb: # Rede do Docker para acessar o MySQl no container especifico
+networks:
+  MysqlNet:
+  TopSchoolNet:
 services:
+  mysql:
+    image: "mysql"
+    container_name: MySqlContainer
+    ports:
+      - "3306:3306"
+    volumes:
+      - VolTopSchoolDb:/var/lib/mysql
+    networks:
+      - MysqlNet
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=secreta
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=secreta
+      - bind-address:0.0.0.0
   topschoolapi:
     image: topschoolapi
     build:
       context: .
-      dockerfile: TopSchool.API/Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - 5067:5067
+      - 8000:5067
+    networks:
+      - MysqlNet
+      - TopSchoolNet
+    environment:
+      - DBHOST=mysql
+    depends_on:
+      - mysql
+    #Depende do serviço do MySql
