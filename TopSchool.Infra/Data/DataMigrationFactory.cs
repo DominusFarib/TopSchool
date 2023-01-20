@@ -15,7 +15,7 @@ public class DataMigrationFactory : IDesignTimeDbContextFactory<DataContext>
 
         //string dBConnectionString = "Data Source=DESKTOP-QPKH2J6\\DOFARIDATABASE;Initial Catalog=DbUdemyDDDCore;User ID=sa;Password=Dfr@123;Connection Timeout=60;Persist Security Info=True";
 
-        string dBConnectionString = "server=localhost;port=3306;uid=root;pwd=secreta;database=DbTopSchoolDb;";
+        string dBConnectionString = "server=172.18.0.2;port=3306;uid=root;pwd=secreta;database=DbTopSchoolDb;";
 
         optionsBuilder.UseMySql(dBConnectionString, ServerVersion.AutoDetect(dBConnectionString));
 
