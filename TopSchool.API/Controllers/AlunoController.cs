@@ -40,15 +40,15 @@ public class AlunoController : ControllerBase
 
     // POST api/<AlunoController>
     [HttpPost]
-    public IActionResult Post([FromBody] AlunoModel oModel)
+    public async Task<IActionResult> Post([FromBody] AlunoModel oModel)
     {
-        return Ok(_Service.Post(oModel));
+        return Ok(await _Service.Post(oModel));
     }
 
     [HttpPost("addRange/")]
-    public IActionResult Post([FromBody] List<AlunoModel> oModel)
+    public async Task<IActionResult> Post([FromBody] List<AlunoModel> oModel)
     {
-        var ret = _Service.Post(oModel);
+        var ret = await _Service.Post(oModel);
         return Ok(ret);
     }
 

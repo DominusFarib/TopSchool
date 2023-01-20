@@ -15,13 +15,15 @@ namespace TopSchool.Infra.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.6");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("TopSchool.Domain.Entities.Aluno", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DtCreate")
                         .HasColumnType("datetime");
@@ -48,7 +50,7 @@ namespace TopSchool.Infra.Migrations
                         new
                         {
                             Id = 100,
-                            DtCreate = new DateTime(2023, 1, 16, 21, 8, 50, 418, DateTimeKind.Local).AddTicks(3982),
+                            DtCreate = new DateTime(2023, 1, 20, 15, 40, 37, 700, DateTimeKind.Local).AddTicks(8949),
                             DtNascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Nome = "Admin",
                             NrMatricula = 100
@@ -59,7 +61,7 @@ namespace TopSchool.Infra.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("AlunoId")
                         .HasColumnType("int");
@@ -86,7 +88,7 @@ namespace TopSchool.Infra.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DtCreate")
                         .HasColumnType("datetime");
@@ -97,7 +99,7 @@ namespace TopSchool.Infra.Migrations
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(80)");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -108,7 +110,7 @@ namespace TopSchool.Infra.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("DisciplinaId")
                         .HasColumnType("int");
@@ -135,7 +137,7 @@ namespace TopSchool.Infra.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DtCreate")
                         .HasColumnType("datetime");
@@ -170,7 +172,7 @@ namespace TopSchool.Infra.Migrations
                     b.HasOne("TopSchool.Domain.Entities.DisciplinaProfessores", "ProfessorDaDisciplina")
                         .WithMany("AlunosDaDisciplina")
                         .HasForeignKey("DisciplinaProfessoresId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Aluno");

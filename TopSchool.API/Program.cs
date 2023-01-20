@@ -17,14 +17,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddVersionedApiExplorer(opt =>
 {
     opt.GroupNameFormat = "'v' VVV";
-    opt.SubstituteApiVersionInUrl = true; // pode por a versão da URL do EndPoint da API
+    opt.SubstituteApiVersionInUrl = true; // pode por a versï¿½o da URL do EndPoint da API
 
 }).AddApiVersioning(opt =>
 {
     opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(6, 0);
     opt.AssumeDefaultVersionWhenUnspecified = true;
     opt.ReportApiVersions = true;
-}); // Caso contrário o middleware põe a versão na URL
+}); // Caso contrï¿½rio o middleware pï¿½e a versï¿½o na URL
 
 
 var apiDescriptionProvider = builder.Services
@@ -33,7 +33,7 @@ var apiDescriptionProvider = builder.Services
 
 builder.Services.AddSwaggerGen(opt =>
 {
-    // Exibindo todas as versões das Controller
+    // Exibindo todas as versï¿½es das Controller
     foreach (var version in apiDescriptionProvider.ApiVersionDescriptions)
     {
         opt.SwaggerDoc(
@@ -73,20 +73,32 @@ ConfigServices.AddServices(builder.Services);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+/*if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(opt =>
     {
-        // Exibindo todas as versões das Controller
+        // Exibindo todas as versï¿½es das Controller
         foreach (var version in apiDescriptionProvider.ApiVersionDescriptions)
         {
             opt.SwaggerEndpoint($"/swagger/{version.GroupName}/swagger.json", version.GroupName.ToLowerInvariant());
         }
         opt.RoutePrefix = "topschool";
     });
-}
-    app.UseHttpsRedirection();
+}*/
+app.UseSwagger();
+app.UseSwaggerUI(opt =>
+{
+    // Exibindo todas as versï¿½es das Controller
+    foreach (var version in apiDescriptionProvider.ApiVersionDescriptions)
+    {
+        opt.SwaggerEndpoint($"/swagger/{version.GroupName}/swagger.json", version.GroupName.ToLowerInvariant());
+    }
+    opt.RoutePrefix = "";
+});
+
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

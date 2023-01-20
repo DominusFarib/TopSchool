@@ -66,8 +66,8 @@ public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : 
         try
         {
             pItem.DtCreate = DateTime.UtcNow;
-            _dbSet.Add(pItem);
-            await _dbContext.SaveChangesAsync();
+            _ = await _dbSet.AddAsync(pItem);
+            _ = await _dbContext.SaveChangesAsync();
         }
         catch (Exception ex)
         {

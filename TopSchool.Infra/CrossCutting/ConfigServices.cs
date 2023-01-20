@@ -30,6 +30,28 @@ namespace TopSchool.Infra.CrossCutting
 
             appServices.AddSingleton(autoMapper);
         }
+        public static void AddDbContext(IServiceCollection appServices)
+        {
+            try
+            {
+                string dBConnectionString = Environment.GetEnvironmentVariable("CONNECTION");
+
+                var dBType = Environment.GetEnvironmentVariable("DATABASE");
+                dBConnectionString = "server=localhost;port=3306;uid=root;pwd=secreta;database=DbTopSchoolDb;";
+
+                //var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
+                //optionsBuilder.UseMySql(dBConnectionString);
+
+
+                appServices.AddDbContext<DataContext>((provider, options) =>
+                { options.UseMySql(dBConnectionString, ServerVersion.AutoDetect(dBConnectionString)); });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Data Base não configurado: " + ex.Message, ex.InnerException);
+            }
+
+        }
 
         public static void AddServices(IServiceCollection appServices)
         {
@@ -44,31 +66,6 @@ namespace TopSchool.Infra.CrossCutting
 
         }
 
-        public static void AddDbContext(IServiceCollection appServices)
-        {
-            try
-            {
-                string dBConnectionString = Environment.GetEnvironmentVariable("CONNECTION");
-
-                var dBType = Environment.GetEnvironmentVariable("DATABASE");
-                dBConnectionString = "Data Source=DbTopSchool.db";
-                appServices.AddDbContext<DataContext>((provider, options) => { options.UseSqlite(dBConnectionString); });
-
-                //if (dBType.ToLower() == "MSSQL".ToLower())
-                //{
-                //    services.AddDbContext<DataContext>((provider, options) => { options.UseSqlite(dBConnectionString); });
-                //}
-                //else
-                //{
-                //    services.AddDbContext<DataContext>((provider, options) => { options.UseSqlServer(dBConnectionString); });
-                //}
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Data Base não configurado: " + ex.Message, ex.InnerException);
-            }
-
-        }
 
     }
 }

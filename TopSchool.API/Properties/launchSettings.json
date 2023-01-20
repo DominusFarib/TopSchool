@@ -5,7 +5,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:16181"
-        //,"sslPort": 44323
+      //,"sslPort": 44323
     }
   },
   "profiles": {
@@ -13,8 +13,8 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "topschool",
-      "applicationUrl": "http://localhost:5070",
+      "launchUrl": "",
+      "applicationUrl": "http://localhost:5070/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "CONNECTION": "Data Source=DbTopSchool.db",
@@ -25,7 +25,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "topschool",
+      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
