@@ -1,4 +1,5 @@
-﻿using TopSchool.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TopSchool.Domain.Entities;
 using TopSchool.Domain.Interfaces.Repositories;
 
 namespace TopSchool.Infra.Data.Repositories;
@@ -10,14 +11,28 @@ public class AlunoRepository : RepositoryBase<Aluno>, IAlunoRepository
         _dbSet = _dbContext.Set<Aluno>();
     }
 
-    public Task<Aluno?> SelectByEmailAsync(string pEmail)
+    public async Task<Aluno?> GetByMatriculaAsync(int pMatricula)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _dbSet.SingleOrDefaultAsync(i => i.NrMatricula.Equals(pMatricula));
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
-    public Task<IEnumerable<Aluno>?> SelectByLikeNameAsync(string pNamePart)
+    public async Task<IEnumerable<Aluno>?> SelectByLikeNameAsync(string pNamePart)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _dbSet.Where(i => i.Nome.Contains(pNamePart)).ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     public Task<Aluno?> SelectByMailAsync(string pMail)

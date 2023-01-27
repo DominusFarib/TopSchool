@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using TopSchool.Domain.Entities;
 using TopSchool.Infra.Data.EntityMapping;
 
@@ -40,6 +39,9 @@ public class DataContext : DbContext
         modelBuilder.Entity<Disciplina>(new DisciplinaConfig().Configure);
         modelBuilder.Entity<AlunoDisciplinas>(new AlunoDisciplinasConfig().Configure);
         modelBuilder.Entity<DisciplinaProfessores>(new DisciplinaProfessoresConfig().Configure);
+        //modelBuilder.Entity<DisciplinaProfessores>().Ignore(c => c.AlunosDaDisciplina);
+
+        //modelBuilder.Entity<Disciplina>().Ignore(c => c.ProfessoresDaDisciplinas);
 
         //RETURN DEFAULT VALUE
         modelBuilder.Entity<Aluno>().HasData(

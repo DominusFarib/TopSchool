@@ -4,6 +4,7 @@ using TopSchool.Domain.Interfaces.Services;
 using TopSchool.Domain.Interfaces.Repositories;
 
 using AutoMapper;
+using TopSchool.Domain.Helpers;
 
 namespace TopSchool.Service;
 
@@ -73,6 +74,27 @@ public class ServiceBase<ModelTarget, ModelResult, TEntity> :
         catch (Exception ex)
         {
             throw new Exception("Que droga de SQLite:" + ex.Message, ex.InnerException);
+        }
+    }
+
+    public async Task<PaginationList<ModelResult>> GetAllAsync(PaginationConfig pageParams)
+    {
+        var ret = await _RepositoryBase.SelectAllAsync(pageParams);
+
+        try
+        {
+            var retModel = _autoMapper.Map<PaginationList<ModelResult>>(ret);
+
+            retModel.CurPage = ret.CurPage;
+            retModel.ItemsPerPage = ret.ItemsPerPage;
+            retModel.TotalItems = ret.TotalItems;
+            retModel.TotalPages = ret.TotalPages;
+
+            return retModel;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Impossível obter todos {typeof(ModelResult).Name} : {ex.Message}", ex.InnerException);
         }
     }
 

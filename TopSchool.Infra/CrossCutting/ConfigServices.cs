@@ -38,6 +38,7 @@ namespace TopSchool.Infra.CrossCutting
 
                 var dBType = Environment.GetEnvironmentVariable("DATABASE");
                 dBConnectionString = "server=172.18.0.2;port=3306;uid=root;pwd=secreta;database=DbTopSchoolDb;";
+                //dBConnectionString = "server=localhost;port=3306;uid=root;pwd=secreta;database=DbTopSchoolDb;";
 
                 //var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
                 //optionsBuilder.UseMySql(dBConnectionString);

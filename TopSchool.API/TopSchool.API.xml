@@ -11,5 +11,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:TopSchool.API.Controllers.ProfessorController.GetAll(TopSchool.Domain.Helpers.PaginationConfig)">
+            <summary>
+            Obtém todos os professores ativos
+            URL: topschool/professor/
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

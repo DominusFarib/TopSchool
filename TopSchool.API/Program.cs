@@ -1,15 +1,56 @@
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Newtonsoft.Json;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using TopSchool.Infra.CrossCutting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(
+//        builder =>
+//        {
+//            builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+//        });
+//});
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(MyAllowSpecificOrigins,
+//                          policy =>
+//                          {
+//                              policy.WithOrigins("http://localhost:4200",
+//                                                  "http://localhost:8000/")
+//                                                  .AllowAnyHeader()
+//                                                  .AllowAnyMethod()
+//                                                  .AllowAnyHeader();
+//                          });
+//});
+
+builder.Services.AddCors();
+
 // Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(o =>
+builder.Services.AddControllers().AddJsonOptions(opt =>
 {
-    o.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-    o.JsonSerializerOptions.MaxDepth = 4;
+    //opt.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    //opt.JsonSerializerOptions.MaxDepth = 4;
+    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
+builder.Services.AddControllersWithViews().AddJsonOptions(opt =>
+{
+    //opt.JsonSerializerOptions.MaxDepth = 4;
+    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
+builder.Services.AddMvc().AddJsonOptions(opt =>
+{
+    //opt.JsonSerializerOptions.MaxDepth = 4;
+    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -24,7 +65,7 @@ builder.Services.AddVersionedApiExplorer(opt =>
     opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(6, 0);
     opt.AssumeDefaultVersionWhenUnspecified = true;
     opt.ReportApiVersions = true;
-}); // Caso contr�rio o middleware p�e a vers�o na URL
+}); 
 
 
 var apiDescriptionProvider = builder.Services
@@ -70,6 +111,7 @@ ConfigServices.AddMapperProfiles(builder.Services);
 ConfigServices.AddDbContext(builder.Services);
 ConfigServices.AddServices(builder.Services);
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -96,11 +138,15 @@ app.UseSwaggerUI(opt =>
     }
     opt.RoutePrefix = "";
 });
+app.UseRouting();
 
-
+// app.UseCors(opt => opt.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+// app.UseCors();
+app.UseCors(MyAllowSpecificOrigins);
+app.UseMiddleware(typeof(ConfigCors)); // Custom CORS settings
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+// app.UseAuthorization();
 
 app.MapControllers();
 

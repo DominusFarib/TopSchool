@@ -20,6 +20,8 @@ public class MapperProfiles : Profile
 
         CreateMap<ProfessorModel, Professor>().ReverseMap();
         CreateMap<DisciplinaModel, Disciplina>().ReverseMap();
+        CreateMap<DisciplinaProfessoresModel, DisciplinaProfessores>().ReverseMap();
+        CreateMap<AlunoDisciplinasModel, AlunoDisciplinas>().ReverseMap();
 
         //CreateMap<MunicipioResultModel, MunicipioEntity>().ReverseMap();
 

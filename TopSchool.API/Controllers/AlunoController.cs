@@ -33,9 +33,9 @@ public class AlunoController : ControllerBase
 
     // GET api/<AlunoController>/5
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public async Task<IActionResult> Get(int id)
     {
-        return (IActionResult)_Service.Get(id);
+        return Ok(await _Service.Get(id));
     }
 
     // POST api/<AlunoController>
@@ -54,14 +54,15 @@ public class AlunoController : ControllerBase
 
     // PUT api/<AlunoController>/5
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] AlunoModel oModel)
+    public async Task<IActionResult> Put(int id, [FromBody] AlunoModel oModel)
     {
-        if (_Service.Get(id) == null)
+        if (await _Service.Get(id) == null)
         {
             return BadRequest("Aluno não encontrado");
         }
+        var ret = await _Service.Put(oModel);
 
-        return Ok(_Service.Put(oModel));
+        return Ok(ret);
     }
 
     // DELETE api/<AlunoController>/5

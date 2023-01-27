@@ -2,5 +2,5 @@
 
 public class ProfessorModel : AssociadoBase
 {
-    public IEnumerable<DisciplinaModel> Disciplinas { get; set; }
+    public IEnumerable<DisciplinaProfessoresModel> DisciplinasDoProfessor { get; set; }
 }
